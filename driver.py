@@ -31,7 +31,8 @@ if __name__ == "__main__":
     
     
     com=communicate(IP,80,"")
-
+    com.set_cmd("status")
+    com.send()
 
     #IP_addr='192.186.137'dssadasd
     #for last in range(256):
@@ -60,8 +61,4 @@ if __name__ == "__main__":
         #com.set_cmd("turn light off")
         #com.send()
 
-        #light
-        #fan
-        #TV
-        #AC
        

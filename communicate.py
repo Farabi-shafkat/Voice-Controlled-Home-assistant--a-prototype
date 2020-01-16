@@ -26,7 +26,7 @@ class communicate:
         retry=5
 
         if self.cmd=="light zero on":
-            while self.state['led0']!='on' and retry>=0 :
+            while self.state['led0']!='on' and retry>=0 : 
                 print("turning on LED 0")
                 self.cmd="?on0EE"
                 self.sock.send(self.cmd.encode("utf8"))
@@ -37,7 +37,7 @@ class communicate:
                     data=self.sock.recv(3)
                     data=data.decode("ascii")
                     print(data)
-                print("light 0 turned ",data)
+                print("light 0 turned on")
                 self.state['led0']="on"
                 retry-=1
       
@@ -52,7 +52,7 @@ class communicate:
                     data=self.sock.recv(4)
                     data=data.decode("ascii")
                     print(data)
-                print("light 0 turned ",data)
+                print("light 0 turned off")
                 self.state['led0']="off"
                 retry-=1
 
@@ -71,7 +71,7 @@ class communicate:
                     data=self.sock.recv(3)
                     data=data.decode("ascii")
                     print(data)
-                print("light 1 turned ",data)
+                print("light 1 turned on")
                 self.state['led1']="on"
                 retry-=1
       
@@ -86,7 +86,7 @@ class communicate:
                     data=self.sock.recv(4)
                     data=data.decode("ascii")
                     print(data)
-                print("light 1 turned ",data)
+                print("light 1 turned off")
                 self.state['led1']="off"
                 retry-=1
         
@@ -103,7 +103,7 @@ class communicate:
                     data=self.sock.recv(3)
                     data=data.decode("ascii")
                     print(data)
-                print("light 2 turned ",data)
+                print("light 2 turned on")
                 self.state['led2']="on"
                 retry-=1
       
@@ -118,7 +118,7 @@ class communicate:
                     data=self.sock.recv(4)
                     data=data.decode("ascii")
                     print(data)
-                print("light 2 turned ",data)
+                print("light 2 turned off")
                 self.state['led2']="off"
                 retry-=1
 
@@ -134,7 +134,7 @@ class communicate:
                     data=self.sock.recv(3)
                     data=data.decode("ascii")
                     print(data)
-                print("light 3 turned ",data)
+                print("light 3 turned on")
                 self.state['led3']="on"
                 retry-=1
       
@@ -149,7 +149,7 @@ class communicate:
                     data=self.sock.recv(4)
                     data=data.decode("ascii")
                     print(data)
-                print("light 3 turned ",data)
+                print("light 3 turned off")
                 self.state['led3']="off"
                 retry-=1  
 
@@ -165,7 +165,7 @@ class communicate:
                     data=self.sock.recv(3)
                     data=data.decode("ascii")
                     print(data)
-                print("light 4 turned ",data)
+                print("light 4 turned on")
                 self.state['led4']="on"
                 retry-=1
       
@@ -180,10 +180,67 @@ class communicate:
                     data=self.sock.recv(4)
                     data=data.decode("ascii")
                     print(data)
-                print("light 4 turned ",data)
+                print("light 4 turned off")
                 self.state['led4']="off"
                 retry-=1        
 
+
+        elif self.cmd=="status":
+             while retry>=0 :
+                print("fetching status")
+                self.cmd="?staEE"
+                self.sock.send(self.cmd.encode("utf8"))
+                data=""
+                while data=="":
+                    data=self.sock.recv(10)
+                    data=data.decode("ascii")
+                    print(data)
+                print("status : ",data)
+                for i in range(5):
+                    #print(data[i+i],data[i+i+1], "eije")
+                    if data[i+i]=='4' and data[i+i+1]=='8':
+                        self.state['led'+str(i)]='off'
+                    elif data[i+i]=='4' and data[i+i+1]=='9':
+                        self.state['led'+str(i)]='on' 
+                retry=-1  
+        
+     
+
+        elif self.cmd=="all light on":
+            print("here")
+           
+            print("turning on all LED")
+            self.cmd="?al1EE"
+            self.sock.send(self.cmd.encode("utf8"))
+            data=""
+            while data!="ONA":
+                data=self.sock.recv(3)
+                data=data.decode("ascii")
+                print(data)
+            print("all lights turned on")
+            self.state['led0']="on"
+            self.state['led1']="on"
+            self.state['led2']="on"
+            self.state['led3']="on"
+            self.state['led4']="on"
+            
+        elif self.cmd=="all light off":
+           
+            print("turning off all LED")
+            self.cmd="?al0EE"
+            self.sock.send(self.cmd.encode("utf8"))
+            data=""
+            while data!="OFFA":
+                data=self.sock.recv(4)
+                data=data.decode("ascii")
+                print(data)
+            print("all lights turned off")
+            self.state['led0']="off"
+            self.state['led1']="off"
+            self.state['led2']="off"
+            self.state['led3']="off"
+            self.state['led4']="off"
+           
         return
 
 if __name__ == "__main__":

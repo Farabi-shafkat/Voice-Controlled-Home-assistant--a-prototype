@@ -13,7 +13,7 @@ class speech_to_text:
             r.adjust_for_ambient_noise(source)
             print("speak_now")
             audio1=r.listen(source)
-            #audio2=r.record(source,duration=4)
+            #audio2=r.record(source,duration=4) 
        # text1="did not work"
         return audio1
     def extract_string(self,audio1):
@@ -49,7 +49,7 @@ class speech_to_text:
             three1='light three on'
             four0='light four off'
             four1='light four on'
-
+            status='status'
             tx=tx1['transcript']
             print(tx)
             if(tx=='light zero on'):
@@ -127,11 +127,21 @@ class speech_to_text:
                 return four1
             elif(tx=='light 4 off'):
                 return four0
-
-           
-
-
-
+            elif(tx=='status'):
+                return tx
+            elif(tx=='all light on'):
+                return tx
+            elif(tx=='all light off'):
+                return tx
+            elif(tx=='all light of'):
+                return 'all light off'
+            elif(tx=='All light on'):
+                return 'all light on'
+            elif(tx=='All light off' or tx=="on light off"):
+                return 'all light off'
+            elif(tx=='All light of'):
+                return 'all light off'
+            
 if __name__ == "__main__":
     test=speech_to_text()
     print(test.do_stuff())
