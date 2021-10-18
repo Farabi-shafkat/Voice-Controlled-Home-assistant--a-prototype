@@ -13,3 +13,5 @@ python driver.py
 If this is the first time the program is running, it will search for the IP address of the esp 8286 to connect. After successfully connecting, you will be prompted to to either press 'T' to type in a command, or to type in 'S' to speak. You can now speak/ type specific commands on the screen to turn specific LEDs on and off on the arduino board
 
 While developing this project, I only gave support for LED pins 1,2,3,4  on the arduino board. You need to connect LED lights with these pins.
+
+Pin 2 & 3 of Arduino ar denoted as RX and TX. Connect TX and RX of ESP8266 respectively
